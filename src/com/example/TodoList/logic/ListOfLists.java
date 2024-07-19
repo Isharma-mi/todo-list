@@ -27,6 +27,24 @@ public class ListOfLists {
 		return instance;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder names = new StringBuilder();
+		
+		if (lists.size() == 0) {
+			names.append("ERROR: No lists found!");
+		} else {
+			for (int i = 0; i < lists.size(); i++) {
+				names.append(lists.get(i).getName());
+				if (i < lists.size() - 1) {
+					names.append("\n");
+				}
+			}
+		}
+		
+		return names.toString();
+	}
+	
 	/**
 	 * Gets a ref to the object containing all the lists. 
 	 * @return returns the List obj containing all the lists of items

@@ -38,9 +38,11 @@ public class UserInterface {
 				continue;
 			} else if(input.equals("1")) { 
 				// Shows all created lists
+				System.out.println();
 				viewAllLists();
 			}else if (input.equals("3")) {
 				// Creates list
+				System.out.println();
 				createList();
 			} else if (input.equals("4")){
 				// Deletes a list
@@ -57,11 +59,7 @@ public class UserInterface {
 	 */
 	private void viewAllLists() {
 		System.out.println("Lists created:");
-		
-		// Loop thru each individual list
-		for (ListOfItems l: ListOfLists.getInstance().getLists()) {
-			System.out.println("\t" + l);
-		}
+		System.out.println(ListOfLists.getInstance());
 	}
 	
 	/**
