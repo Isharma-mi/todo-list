@@ -20,13 +20,14 @@ public class UserInterface {
 			// TODO: Implement all options
 			System.out.println("---------------Welcome to the TodoList! What would you like to do?------------------"
 					+ "\n1: View name of all lists"
-					+ "\n2: View items of a list"
-					+ "\n3: Create a list"
-					+ "\n4: Delete a list"
-					+ "\n5: Create item for a list"
-					+ "\n6: Import from csv file"
-					+ "\n7: Export to csv file"
-					+ "\n6: Exit program");
+					+ "\n2: Create a list"
+					+ "\n3: Delete a list"
+					+ "\n4: View all items from a list"
+					+ "\n5: Add item to a list"
+					+ "\n6: Delete item from a list"
+					+ "\n7: Import from csv file"
+					+ "\n8: Export to csv file"
+					+ "\n9: Exit program");
 			
 			// Gets user input
 			String input = this.scanner.nextLine();
@@ -39,19 +40,23 @@ public class UserInterface {
 				// Shows all created lists
 				System.out.println();
 				viewAllLists();
-			} else if (input.equals("3")) {
+			} else if (input.equals("2")) {
 				// Creates list
 				System.out.println();
 				createList();
-			} else if (input.equals("4")){
+			} else if (input.equals("3")) {
 				// Deletes a list
 				System.out.println();
 				deleteList();
+			} else if (input.equals("4")) {
+				// View all items 
+				System.out.println();
+				viewItemsOfList();
 			} else if (input.equals("5")) {
 				// Creates item in a list
 				System.out.println();
-				createItem();
-			} else if(input.equals("6")) {
+				addItem();
+			} else if(input.equals("10")) {
 				// Terminates program
 				break;
 			}
@@ -102,27 +107,45 @@ public class UserInterface {
 	/** 
 	 * Creates an item for a specific list
 	 */
-	private void createItem() {
-		
-		/*
-		System.out.println("\nFor what list do you want to add the item to?");
+	private void addItem() {
+		System.out.println("For what list do you want to add the item to?");
 		String listName = this.scanner.nextLine().trim();
 		
+		ListOfItems list = ListOfLists.getInstance().get(listName);
 		
-		// Stops trying to make an item if list does NOT exist
-		if (!ListOfLists.getInstance().checkListExists(listName)) {
-			System.out.println("ERROR: Unable to find list!");
+		// Stops trying to create item if list does NOT exist
+		if (list == null) {
+			System.out.println("ERROR: List could NOT be found!");
 			return;
 		}
 		
-		System.out.println("What is the name of the item?");
+		System.out.printf("For list: %s, What is the name of the item?\n", list.getName());
 		String itemName = this.scanner.nextLine().trim();
-		System.out.println("What is the descripiton of the item?");
-		*/
+		System.out.printf("For item: %s, What is the description of the item?\n", itemName);
+		String description = this.scanner.nextLine().trim();
 		
-	//	ListOfLists.getInstance().get("asd");
-	
-		// Create item (Call method in ListOfItems that will create a new Item w/the info given)
-		// Add item to list
+		boolean wasAdded= list.addItem(itemName, description);
+		
+		if (wasAdded) {
+			System.out.println("Item successfuly created and added to list");
+		} else {
+			System.out.printf("ERROR: %s could NOT be added to %s", itemName, list.getName());
+		}
+		
+	}
+
+	private void viewItemsOfList() {
+		System.out.println("For what list do you want to see the items for?");
+		String listName = this.scanner.nextLine().trim();
+		
+		ListOfItems list = ListOfLists.getInstance().get(listName);
+		
+		// Stop trying to view items if list does NOT exist
+		if (list == null) {
+			System.out.println("ERROR: List could NOT be found!");
+			return;
+		}
+		
+		System.out.println(list);
 	}
 }
