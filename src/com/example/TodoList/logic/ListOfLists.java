@@ -42,6 +42,7 @@ public class ListOfLists {
 			}
 		}
 		
+		// Returns the names of each list
 		return names.toString();
 	}
 	
@@ -52,30 +53,40 @@ public class ListOfLists {
 	public List<ListOfItems> getLists() {
 		return this.lists;
 	}
-
+	
+	/**
+	 * Gets a ref to a specifc list
+	 * @param listName used to find the list
+	 * @return returns the list (NOTE: Can return null)
+	 */
+	public ListOfItems get(String listName) {
+		ListOfItems listOfItems = null;
+		
+		/*
+		 *  Loop thru each list of items in overall lists to find the one specifed
+		 *  Use for-each loop since just want to get a ref to the obj if found
+		 */
+		for (ListOfItems l: this.lists) {
+			if (l.getName().equals(listName)) {
+				listOfItems = l;
+			}
+		}
+		
+		return listOfItems;
+	}
+		
 	/**
 	 * Adds an individual list.
 	 * @param listName used to set the name of the list user wants to add.
 	 * @return returns boolean letting caller know if list was added
 	 */
 	public boolean addList(String listName) {
-		Iterator<ListOfItems> it = this.lists.iterator();
-		boolean canAdd = true;
+		boolean canAdd = !this.lists.stream().anyMatch(l -> l.getName().equals(listName));
 		
-		// Loops thru all the lists of items in overall list
-		while (it.hasNext()) {
-			if (it.next().getName().equals(listName)) {
-				canAdd = false;
-				break;
-			}
-		}
-		
-		// Adds list and lets user know
 		if (canAdd) {
 			this.lists.add(new ListOfItems(listName));
 		}
 		
-		// Lets caller know if list was added
 		return canAdd;
 	}
 	
@@ -88,7 +99,7 @@ public class ListOfLists {
 		Iterator<ListOfItems> it = this.lists.iterator();
 		boolean wasDeleted = false;
 		
-		// Loops thru all the lists of items in the overall list
+		// Iterates thru all lists of items.
 		while (it.hasNext()) {
 			if (it.next().getName().equals(listName)) {
 				it.remove();
@@ -97,7 +108,6 @@ public class ListOfLists {
 			}
 		}
 		
-		// Lets caller know if list was deleted
 		return wasDeleted;
 	}
 }

@@ -15,4 +15,10 @@ public class ListOfItems {
 	public String getName() {
 		return this.name;
 	}
+	
+	public void addItem(String name, String description) {
+		this.items.add(new Item(name, description));
+	}
+	
+	
 }
