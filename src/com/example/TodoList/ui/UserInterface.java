@@ -38,15 +38,20 @@ public class UserInterface {
 				continue;
 			} else if(input.equals("1")) { 
 				// Shows all created lists
-				System.out.println();
+				System.out.println("\nLists created:");
 				viewAllLists();
-			}else if (input.equals("3")) {
+			} else if (input.equals("3")) {
 				// Creates list
-				System.out.println();
-				createList();
+				System.out.println("\nWhat do you want the name of the list to be?");
+				String listName = this.scanner.nextLine().trim();
+				createList(listName);
 			} else if (input.equals("4")){
 				// Deletes a list
-				deleteList();
+				System.out.println("\nWhat list do you want to delete?");
+				String listName = this.scanner.nextLine().trim();
+				deleteList(listName);
+			} else if (input.equals("5")) {
+				createItem();
 			} else if(input.equals("6")) {
 				// Terminates program
 				break;
@@ -58,17 +63,13 @@ public class UserInterface {
 	 * Shows the name of all the lists made via the singelton instance.
 	 */
 	private void viewAllLists() {
-		System.out.println("Lists created:");
 		System.out.println(ListOfLists.getInstance());
 	}
 	
 	/**
 	 * Makes a new list based off user input.
 	 */
-	private void createList() {
-		System.out.println("What do you want the name of the list to be?");
-		String listName = this.scanner.nextLine().trim();
-		
+	private void createList(String listName) {
 		boolean wasAdded = ListOfLists.getInstance().addList(listName);
 		
 		if (wasAdded) { 
@@ -81,10 +82,7 @@ public class UserInterface {
 	/**
 	 * Deletes list based off user input.
 	 */
-	private void deleteList() {
-		System.out.println("What list do you want to delete?");
-		String listName = this.scanner.nextLine().trim();
-		
+	private void deleteList(String listName) {
 		boolean wasDeleted = ListOfLists.getInstance().deleteList(listName);
 		
 		// Lets user know if list was deleted or not
@@ -94,5 +92,12 @@ public class UserInterface {
 			System.out.println("ERROR: List could NOT be found!");
 		}
 
+	}
+	
+	/** 
+	 * Creates an item for a specific list
+	 */
+	private void createItem() {
+		
 	}
 }
