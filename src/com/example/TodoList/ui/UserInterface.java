@@ -2,7 +2,6 @@ package com.example.TodoList.ui;
 
 import com.example.TodoList.logic.ListOfItems;
 import com.example.TodoList.logic.ListOfLists;
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -54,62 +53,47 @@ public class UserInterface {
 	}
 	
 	/**
-	 * Used to see the name of all the lists made via the singelton instance.
+	 * Shows the name of all the lists made via the singelton instance.
 	 */
 	private void viewAllLists() {
 		System.out.println("Lists created:");
 		
 		// Loop thru each individual list
-		for (ListOfItems l: ListOfLists.getInstance().getListsOfItems()) {
+		for (ListOfItems l: ListOfLists.getInstance().getLists()) {
 			System.out.println("\t" + l);
 		}
 	}
 	
 	/**
-	 * Used to make a new list based off user input.
+	 * Makes a new list based off user input.
 	 */
 	private void createList() {
 		System.out.println("What do you want the name of the list to be?");
 		String listName = this.scanner.nextLine().trim();
 		
-		ListOfLists listOfListsRef = ListOfLists.getInstance();
+		boolean wasAdded = ListOfLists.getInstance().addList(listName);
 		
-		// Checks if a list with the same name already exists
-		boolean listExists = listOfListsRef.getListsOfItems().stream().anyMatch(obj -> obj.getName().equals(listName));
-		
-		if (listExists) { 
-			System.out.println("ERROR: List with same exists already!");
+		if (wasAdded) { 
+			System.out.println("List successfully added");
 		} else {
-			// Creates list and adds it to list of lists
-			listOfListsRef.addList(new ListOfItems(listName));
+			System.out.println("ERROR: List already exists!");
 		}
 	}
 	
 	/**
-	 * Used to delete a list based off user input. Iterates thru list looking for one with the name that user gives.
+	 * Deletes list based off user input.
 	 */
 	private void deleteList() {
 		System.out.println("What list do you want to delete?");
 		String listName = this.scanner.nextLine().trim();
 		
-		// Iterator chosen over for loop to perform safe removal
-		Iterator<ListOfItems> it = ListOfLists.getInstance().getListsOfItems().iterator();
-		boolean listDeleted = false;
-		
-		// Iterates thru all the lists till it finds the one user wants to delete
-		while (it.hasNext()) {
-			if (it.next().getName().equals(listName)) {
-				it.remove();
-				listDeleted = true;
-				break;
-			}
-		}
+		boolean wasDeleted = ListOfLists.getInstance().deleteList(listName);
 		
 		// Lets user know if list was deleted or not
-		if (listDeleted) {
-			System.out.println("List successfuly deleted!");
+		if (wasDeleted) {
+			System.out.println("List successfully deleted!");
 		} else {
-			System.out.println("ERROR: List could NOT be found");
+			System.out.println("ERROR: List could NOT be found!");
 		}
 
 	}
