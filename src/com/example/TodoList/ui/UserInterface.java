@@ -125,7 +125,14 @@ public class UserInterface {
 		
 		System.out.printf("For list: %s, What is the name of the item?\n", list.getName());
 		String itemName = this.scanner.nextLine().trim();
-		System.out.printf("For item: %s, What is the description of the item?\n", itemName);
+		
+		// Stops trying to create item if item already exists
+		if (list.getItem(itemName) != null) {
+			System.out.println("ERROR: Item already exists!");
+			return;
+		}
+		
+		System.out.printf("For item: %s, What is the description of the item (Press enter for no description)?\n", itemName);
 		String description = this.scanner.nextLine().trim();
 		
 		boolean wasAdded = list.addItem(itemName, description);
