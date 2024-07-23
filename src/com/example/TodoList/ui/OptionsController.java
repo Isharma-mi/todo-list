@@ -1,76 +1,21 @@
 package com.example.TodoList.ui;
 
+import java.util.Scanner;
+import com.example.TodoList.file.TodoFileWriter;
 import com.example.TodoList.logic.ListOfItems;
 import com.example.TodoList.logic.ListOfLists;
-import java.util.Scanner;
 
-public class UserInterface {
+public class OptionsController {
 	private Scanner scanner;
 	
-	public UserInterface() {
+	public OptionsController() {
 		this.scanner = new Scanner(System.in);
-	}
-	
-	/**
-	 * Allows for user to interact with the program thru the console.
-	 */
-	public void start() {
-		while (true) {
-			// Asks user what they want to do
-			// TODO: Implement all options
-			System.out.println("---------------Welcome to the TodoList! What would you like to do?------------------"
-					+ "\n1: View name of all lists"
-					+ "\n2: Create a list"
-					+ "\n3: Delete a list"
-					+ "\n4: View all items from a list"
-					+ "\n5: Add item to a list"
-					+ "\n6: Delete item from a list"
-					+ "\n7: Import from csv file"
-					+ "\n8: Export to csv file"
-					+ "\n9: Exit program");
-			
-			// Gets user input
-			String input = this.scanner.nextLine();
-
-			if (!input.matches("[123456789]")) {
-				// If user input is incorrect  -> Restart process of asking what user wants to do
-				System.out.println("ERROR: Please give a correct input!");
-				continue;
-			} else if(input.equals("1")) { 
-				// Shows all created lists
-				System.out.println();
-				viewAllLists();
-			} else if (input.equals("2")) {
-				// Creates list
-				System.out.println();
-				createList();
-			} else if (input.equals("3")) {
-				// Deletes a list
-				System.out.println();
-				deleteList();
-			} else if (input.equals("4")) {
-				// View all items 
-				System.out.println();
-				viewItemsOfList();
-			} else if (input.equals("5")) {
-				// Creates item in a list
-				System.out.println();
-				addItem();
-			} else if (input.equals("6")) {
-				// Deletes item from a list
-				System.out.println();
-				deleteItem();
-			} else if(input.equals("9")) {
-				// Terminates program
-				break;
-			}
-		}
 	}
 	
 	/**
 	 * Shows the name of all the lists made via the singelton instance.
 	 */
-	private void viewAllLists() {
+	void viewAllLists() {
 		System.out.println("Lists created:");
 		System.out.println(ListOfLists.getInstance());
 	}
@@ -78,7 +23,7 @@ public class UserInterface {
 	/**
 	 * Makes a new list based off user input.
 	 */
-	private void createList() {
+	void createList() {
 		System.out.println("What do you want the name of the list to be?");
 		String listName = this.scanner.nextLine().trim();
 		boolean wasAdded = ListOfLists.getInstance().addList(listName);
@@ -94,7 +39,7 @@ public class UserInterface {
 	/**
 	 * Deletes list based off user input.
 	 */
-	private void deleteList() {
+	void deleteList() {
 		System.out.println("What list do you want to delete?");
 		String listName = this.scanner.nextLine().trim();
 		boolean wasDeleted = ListOfLists.getInstance().deleteList(listName);
@@ -111,7 +56,7 @@ public class UserInterface {
 	/** 
 	 * Creates an item for a specific list
 	 */
-	private void addItem() {
+	void addItem() {
 		System.out.println("For what list do you want to add the item to?");
 		String listName = this.scanner.nextLine().trim();
 		
@@ -148,7 +93,7 @@ public class UserInterface {
 	/**
 	 * Deletes an item from a specific list
 	 */
-	private void deleteItem() {
+	void deleteItem() {
 		System.out.println("For what list do you want to delete the item from?");
 		
 		String listName = this.scanner.nextLine().trim();
@@ -175,7 +120,7 @@ public class UserInterface {
 	/**
 	 * Shows info on all the items in a list	
 	 */
-	private void viewItemsOfList() {
+	void viewItemsOfList() {
 		System.out.println("For what list do you want to see the items for?");
 		String listName = this.scanner.nextLine().trim();
 		
@@ -188,5 +133,21 @@ public class UserInterface {
 		}
 		
 		System.out.println(list);
+	}
+
+	/**
+	 * Exports list and items to a file
+	 */
+	void exportToFile() {
+		System.out.println("What do you want the file name to be called?");
+		String fileName = this.scanner.nextLine();
+		
+		boolean wroteToFile = TodoFileWriter.writeToFile(fileName);
+		
+		if (wroteToFile) {
+			System.out.println("Lists and items saved!");
+		} else {
+			System.out.println("ERROR: Unable to save to file!");
+		}
 	}
 }

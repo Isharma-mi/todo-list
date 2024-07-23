@@ -16,8 +16,7 @@ public class ListOfItems {
 	@Override
 	public String toString() {
 		Iterator<Item> it = this.items.iterator();
-		StringBuilder listDetails = new StringBuilder("List Name: ");		
-		listDetails.append(this.name);
+		StringBuilder listDetails = new StringBuilder(this.name);		
 		listDetails.append("\n");
 		
 		while (it.hasNext()) {

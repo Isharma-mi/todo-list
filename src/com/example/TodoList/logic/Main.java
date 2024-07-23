@@ -1,11 +1,11 @@
 package com.example.TodoList.logic;
 
-import com.example.TodoList.ui.UserInterface;
+import com.example.TodoList.ui.UIController;
 
 public class Main {
 	
 	public static void main(String[] args) {
-		UserInterface ui = new UserInterface();
+		UIController ui = new UIController();
 		ui.start();
 	}
 }
