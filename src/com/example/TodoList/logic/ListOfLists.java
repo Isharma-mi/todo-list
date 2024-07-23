@@ -27,6 +27,20 @@ public class ListOfLists {
 		return instance;
 	}
 	
+	/**
+	 * Used for testing purposes.
+	 * Removes references to all lists of items currently being stored and the items being stored in each list.
+	 * Overall, Resets singelton instance so that tests can run smoothly without any accidental dependencies to each other.
+	 */
+	public void reset() {
+
+		for (ListOfItems l: this.lists) {
+			l.reset();
+		}
+		
+		this.lists.clear();
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder names = new StringBuilder();

@@ -35,6 +35,14 @@ public class ListOfItems {
 	}
 	
 	/**
+	 * Used for testing purposes.
+	 * Removes all the items stored in the list.
+	 */
+	public void reset() {
+		this.items.clear();
+	}
+	
+	/**
 	 * Adds an item to the list
 	 * @param name used to set the name of the item
 	 * @param description used to give additional info about the item

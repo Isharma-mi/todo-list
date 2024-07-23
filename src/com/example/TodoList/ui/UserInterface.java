@@ -134,6 +134,9 @@ public class UserInterface {
 		
 	}
 
+	/**
+	 * Shows info on all the items in a list	
+	 */
 	private void viewItemsOfList() {
 		System.out.println("For what list do you want to see the items for?");
 		String listName = this.scanner.nextLine().trim();
