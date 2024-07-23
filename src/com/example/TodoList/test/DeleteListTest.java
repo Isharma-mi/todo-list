@@ -16,7 +16,7 @@ class DeleteListTest {
 	}
 	
 	/**
-	 * Test case checking that a list can be deleted.
+	 * Test case testing that a list can be deleted.
 	 */
 	@Test
 	void deleteExistingListShouldReturnTrue() {
@@ -26,8 +26,8 @@ class DeleteListTest {
 	}
 	
 	/**
-	 * Test case checking that a nonexistent list will NOT be deleted.
-	 * Mainly done to check correct boolean return
+	 * Test case testing that a nonexistent list will NOT be deleted.
+	 * Done to check that boolean returned is false.
 	 */
 	@Test
 	void deleteNotExistingListShouldReturnFalse() {
@@ -36,7 +36,7 @@ class DeleteListTest {
 	}
 	
 	/**
-	 * Test case checking that multiple lists can be deleted.
+	 * Test case testing that multiple lists can be deleted.
 	 */
 	@Test
 	void deleteMultipleExistingListsShouldReturnTrue() {

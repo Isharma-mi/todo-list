@@ -32,7 +32,7 @@ public class UserInterface {
 			// Gets user input
 			String input = this.scanner.nextLine();
 
-			if (!input.matches("[123456]")) {
+			if (!input.matches("[123456789]")) {
 				// If user input is incorrect  -> Restart process of asking what user wants to do
 				System.out.println("ERROR: Please give a correct input!");
 				continue;
@@ -56,7 +56,11 @@ public class UserInterface {
 				// Creates item in a list
 				System.out.println();
 				addItem();
-			} else if(input.equals("10")) {
+			} else if (input.equals("6")) {
+				// Deletes item from a list
+				System.out.println();
+				deleteItem();
+			} else if(input.equals("9")) {
 				// Terminates program
 				break;
 			}
@@ -111,7 +115,7 @@ public class UserInterface {
 		System.out.println("For what list do you want to add the item to?");
 		String listName = this.scanner.nextLine().trim();
 		
-		ListOfItems list = ListOfLists.getInstance().get(listName);
+		ListOfItems list = ListOfLists.getInstance().getList(listName);
 		
 		// Stops trying to create item if list does NOT exist
 		if (list == null) {
@@ -124,14 +128,41 @@ public class UserInterface {
 		System.out.printf("For item: %s, What is the description of the item?\n", itemName);
 		String description = this.scanner.nextLine().trim();
 		
-		boolean wasAdded= list.addItem(itemName, description);
+		boolean wasAdded = list.addItem(itemName, description);
 		
 		if (wasAdded) {
 			System.out.println("Item successfuly created and added to list");
 		} else {
-			System.out.printf("ERROR: %s could NOT be added to %s", itemName, list.getName());
+			System.out.printf("ERROR: %s could NOT be added to %s\n", itemName, list.getName());
 		}
 		
+	}
+	
+	/**
+	 * Deletes an item from a specific list
+	 */
+	private void deleteItem() {
+		System.out.println("For what list do you want to delete the item from?");
+		
+		String listName = this.scanner.nextLine().trim();
+		
+		ListOfItems list = ListOfLists.getInstance().getList(listName);
+		
+		// Stop trying to delete item if list does NOT exist 
+		if (list == null) {
+			System.out.println("ERROR: List could NOT be found!");
+			return;
+		}
+		
+		System.out.printf("For list: %s, What is the name of the item?\n", listName);
+		String itemName = this.scanner.nextLine().trim();
+		boolean wasDeleted = list.deleteItem(itemName);
+		
+		if (wasDeleted) {
+			System.out.println("Item successfully deleted from list!");
+		} else {
+			System.out.printf("ERROR: %s could not be deleted from %s\n", itemName, listName);
+		}
 	}
 
 	/**
@@ -141,7 +172,7 @@ public class UserInterface {
 		System.out.println("For what list do you want to see the items for?");
 		String listName = this.scanner.nextLine().trim();
 		
-		ListOfItems list = ListOfLists.getInstance().get(listName);
+		ListOfItems list = ListOfLists.getInstance().getList(listName);
 		
 		// Stop trying to view items if list does NOT exist
 		if (list == null) {

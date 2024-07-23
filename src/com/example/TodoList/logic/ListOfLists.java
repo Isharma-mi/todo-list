@@ -69,11 +69,11 @@ public class ListOfLists {
 	}
 	
 	/**
-	 * Gets a ref to a specifc list
+	 * Gets a ref to a specific list
 	 * @param listName used to find the list
 	 * @return returns the list (NOTE: Can return null)
 	 */
-	public ListOfItems get(String listName) {
+	public ListOfItems getList(String listName) {
 		ListOfItems listOfItems = null;
 		
 		/*
@@ -110,16 +110,11 @@ public class ListOfLists {
 	 * @return returns boolean letting caller know if list was deleted.
 	 */
 	public boolean deleteList(String listName) {
-		Iterator<ListOfItems> it = this.lists.iterator();
 		boolean wasDeleted = false;
 		
-		// Iterates thru all lists of items.
-		while (it.hasNext()) {
-			if (it.next().getName().equals(listName)) {
-				it.remove();
-				wasDeleted = true;
-				break;
-			}
+		//  Get list obj -> Then removes obj 
+		if (this.lists.remove(this.getList(listName))) {
+			wasDeleted = true;
 		}
 		
 		return wasDeleted;

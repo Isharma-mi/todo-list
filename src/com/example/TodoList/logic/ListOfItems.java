@@ -43,6 +43,22 @@ public class ListOfItems {
 	}
 	
 	/**
+	 * Gets a ref to a specific item
+	 * @param itemName used to find item
+	 * @return returns the item (NOTE: Can return null)
+	 */
+	public Item getItem(String itemName) {
+		Item item = null;
+		
+		for (Item i: this.items) {
+			if (i.getName().equals(itemName)) {
+				item = i;
+			}
+		}
+		return item;
+	}
+	
+	/**
 	 * Adds an item to the list
 	 * @param name used to set the name of the item
 	 * @param description used to give additional info about the item
@@ -57,5 +73,21 @@ public class ListOfItems {
 		}
 		
 		return canAdd;
+	}
+	
+	/**
+	 * Deletes an item from the list
+	 * @param itemName used to find the item
+	 * @return returns boolean letting caller know if item was deleted or not
+	 */
+	public boolean deleteItem(String itemName) {
+		// Checks if an item with the same name exists already
+		boolean canDelete = false;
+		
+		if (this.items.remove(this.getItem(itemName))) {
+			canDelete = true;
+		}
+		
+		return canDelete;
 	}
 }
