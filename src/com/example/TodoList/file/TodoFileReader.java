@@ -7,7 +7,7 @@ import java.io.IOException;
 import com.example.TodoList.logic.ListOfLists;
 
 public class TodoFileReader {
-	// TODO: Create tests for importing and exporting
+	
 	public static boolean importFile(String fileName) {
 		boolean fileRead = false;
 		try (BufferedReader reader = new BufferedReader(new FileReader(fileName + ".txt"))) {
@@ -59,8 +59,9 @@ public class TodoFileReader {
 				}
 			}
 			fileRead = true;
+			
 		} catch (IOException e) {
-			System.out.println("ERROR: Unable to save lists and/or items from file!");
+			fileRead = false;
 		}
 		
 		return fileRead;

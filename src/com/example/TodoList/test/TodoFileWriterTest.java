@@ -12,6 +12,10 @@ import org.junit.jupiter.api.BeforeEach;
 
 class TodoFileWriterTest {
 	
+	/**
+	 * Resets any refs singelton has before a test is done.
+	 * Also helps with making sure helper methods do NOT have any lingering impact.
+	 */
 	@BeforeEach
 	public void setup() {
 		ListOfLists.getInstance().reset();
@@ -21,14 +25,10 @@ class TodoFileWriterTest {
 	 * Test case for testing creation of a file.
 	 */
 	@Test
-	public void createFile() {	
+	public void creatingFileShouldReturnTrue() {	
 		String testFile1Name = "TestFile1";
+		createPlanetsList();
 		
-		ListOfLists.getInstance().addList("Planets");
-		ListOfLists.getInstance().getList("Planets").addItem("Mercury", "");
-		ListOfLists.getInstance().getList("Planets").addItem("Venus", "Getting pretty close to our planet.");
-		ListOfLists.getInstance().getList("Planets").addItem("Earth", "Our homeplanet!");
-				
 		// Tests custom method for creating file
 		assertTrue(TodoFileWriter.writeToFile(testFile1Name), "Custom method for creating file should work.");
 		
@@ -49,23 +49,15 @@ class TodoFileWriterTest {
 	 * Test case for testing creation of multiple unique files.
 	 */
 	@Test
-	public void createMultipleFilesShouldReturnTrue() {
+	public void creatingMultipleFilesShouldReturnTrue() {
 		// Creates 1 list and items
 		String testFile1Name = "TestFile1";
-		ListOfLists.getInstance().addList("Planets");
-		ListOfLists.getInstance().getList("Planets").addItem("Mercury", "");
-		ListOfLists.getInstance().getList("Planets").addItem("Venus", "Getting pretty close to our planet.");
-		ListOfLists.getInstance().getList("Planets").addItem("Earth", "Our homeplanet!");
-		
+		createPlanetsList();
 		assertTrue(TodoFileWriter.writeToFile(testFile1Name), "File should be created containing only a List Planets");
 		
 		// Creates another list and items
 		String testFile2Name = "TestFile2";
-		ListOfLists.getInstance().addList("Lightsabers");
-		ListOfLists.getInstance().getList("Lightsabers").addItem("Anakin's lightsaber", "Beware of friendly fire!");
-		ListOfLists.getInstance().getList("Lightsabers").addItem("Ahsoka's lightsabers", "Cool dual wielding w/double grip!");
-		ListOfLists.getInstance().getList("Lightsabers").addItem("Palpatine's lightsaber", "Why use a lightsaber when have lightning?");
-		ListOfLists.getInstance().getList("Lightsabers").addItem("Starkiller's lightsaber", "");
+		createLightsabersList();
 		assertTrue(TodoFileWriter.writeToFile(testFile2Name), "2nd file should be created containing prev list and new list");
 		
 		/* 
@@ -82,5 +74,28 @@ class TodoFileWriterTest {
 		} catch (IOException e) {
 			System.out.println("ERROR: Unable to delete files!");
 		}
+	}
+	
+	/**
+	 * Helper method creating a list containing info about a few planets.
+	 * Created sep'ly to make code for testing more clean.
+	 */
+	private void createPlanetsList() {
+		ListOfLists.getInstance().addList("Planets");
+		ListOfLists.getInstance().getList("Planets").addItem("Mercury", "");
+		ListOfLists.getInstance().getList("Planets").addItem("Venus", "Getting pretty close to our planet.");
+		ListOfLists.getInstance().getList("Planets").addItem("Earth", "Our homeplanet!");
+	}
+
+	/**
+	 * Creates a list containing info about a few lightsabers.
+	 * Created sep'ly to make code for testing mroe clean.
+	 */
+	private void createLightsabersList() {
+		ListOfLists.getInstance().addList("Lightsabers");
+		ListOfLists.getInstance().getList("Lightsabers").addItem("Anakin's lightsaber", "Beware of friendly fire!");
+		ListOfLists.getInstance().getList("Lightsabers").addItem("Ahsoka's lightsabers", "Cool dual wielding w/double grip!");
+		ListOfLists.getInstance().getList("Lightsabers").addItem("Palpatine's lightsaber", "Why use a lightsaber when have lightning?");
+		ListOfLists.getInstance().getList("Lightsabers").addItem("Starkiller's lightsaber", "");
 	}
 }

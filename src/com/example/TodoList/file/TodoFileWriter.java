@@ -15,8 +15,7 @@ public class TodoFileWriter {
 	 */
 	public static boolean writeToFile(String fileName) {
 		boolean fileCreatedAndWritten = false;
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName + ".txt"));
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName + ".txt"))) {
 			
 			// Writes out each list and item to the file
 			for (ListOfItems l: ListOfLists.getInstance().getLists()) {
@@ -27,7 +26,7 @@ public class TodoFileWriter {
 			fileCreatedAndWritten = true;
 			writer.close();
 		} catch (IOException e) {
-			System.out.println("ERROR: Unable to write to a file.");
+			fileCreatedAndWritten = false;
 		}
 		
 		return fileCreatedAndWritten;
