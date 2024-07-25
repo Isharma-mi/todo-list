@@ -25,8 +25,8 @@ public class UIController {
 					+ "\n4: View all items from a list"
 					+ "\n5: Add item to a list"
 					+ "\n6: Delete item from a list"
-					+ "\n7: Import from csv file"
-					+ "\n8: Export to csv file"
+					+ "\n7: Import from file"
+					+ "\n8: Export to file"
 					+ "\n9: Exit program");
 			
 			// Gets user input
@@ -60,6 +60,10 @@ public class UIController {
 				// Deletes item from a list
 				System.out.println();
 				oc.deleteItem();
+			} else if (input.equals("7")){
+				// Imports lists and items from a file 
+				System.out.println();
+				oc.importFromFile();
 			} else if (input.equals("8")) {
 				// Saves lists and items to a file
 				System.out.println();

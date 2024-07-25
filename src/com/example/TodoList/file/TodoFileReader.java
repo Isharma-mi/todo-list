@@ -7,10 +7,10 @@ import java.io.IOException;
 import com.example.TodoList.logic.ListOfLists;
 
 public class TodoFileReader {
-	
+	// TODO: Create tests for importing and exporting
 	public static boolean importFile(String fileName) {
 		boolean fileRead = false;
-		try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+		try (BufferedReader reader = new BufferedReader(new FileReader(fileName + ".txt"))) {
 			boolean inAList = false;
 			String line;
 			String listName = null;
@@ -60,14 +60,8 @@ public class TodoFileReader {
 			}
 			fileRead = true;
 		} catch (IOException e) {
-			System.out.println("ERROR: Unable to read file!");
+			System.out.println("ERROR: Unable to save lists and/or items from file!");
 		}
-		
-		/* FOR TESTING PURPOSES 
-		System.out.println(ListOfLists.getInstance().getList("Lightsabers"));
-		System.out.println(ListOfLists.getInstance().getList("Groceries"));
-		System.out.println(ListOfLists.getInstance().getList("Weapons"));
-		*/
 		
 		return fileRead;
 	}		

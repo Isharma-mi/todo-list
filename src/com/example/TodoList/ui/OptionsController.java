@@ -1,6 +1,8 @@
 package com.example.TodoList.ui;
 
 import java.util.Scanner;
+
+import com.example.TodoList.file.TodoFileReader;
 import com.example.TodoList.file.TodoFileWriter;
 import com.example.TodoList.logic.ListOfItems;
 import com.example.TodoList.logic.ListOfLists;
@@ -26,6 +28,13 @@ public class OptionsController {
 	void createList() {
 		System.out.println("What do you want the name of the list to be?");
 		String listName = this.scanner.nextLine().trim();
+		
+		// Done to make importing/exporting and viewing of lists more clean
+		if (listName.startsWith("-") || listName.isEmpty()) {
+			System.out.println("ERROR: Please enter a list name that does NOT begin with - and is NOT empty!");
+			return;
+		}
+		
 		boolean wasAdded = ListOfLists.getInstance().addList(listName);
 		
 		// Lets user know if list was made
@@ -71,9 +80,13 @@ public class OptionsController {
 		System.out.printf("For list: %s, What is the name of the item?\n", list.getName());
 		String itemName = this.scanner.nextLine().trim();
 		
-		// Stops trying to create item if item already exists
 		if (list.getItem(itemName) != null) {
+			// Stops trying to create item if item already exists
 			System.out.println("ERROR: Item already exists!");
+			return;
+		} else if (itemName.startsWith("-") || itemName.isEmpty()) {
+			// Done to make importing/exporting and viewing of items more clean
+			System.out.println("ERROR: Please enter an item name that does NOT beign with - and is NOT empty!");
 			return;
 		}
 		
@@ -136,7 +149,7 @@ public class OptionsController {
 	}
 
 	/**
-	 * Exports list and items to a file
+	 * Exports lists and items to a file of with a specific format. 
 	 */
 	void exportToFile() {
 		System.out.println("What do you want the file name to be called?");
@@ -149,5 +162,23 @@ public class OptionsController {
 		} else {
 			System.out.println("ERROR: Unable to save to file!");
 		}
+	}
+	
+	/**
+	 * Imports lists and items from a file. 
+	 * NOTE: Formatting of file needs to be same as exported file.
+	 */
+	void importFromFile() {
+		System.out.println("From what file do you want to import list from? (NOTE: Needs to be of same format file was exported as)");
+		String fileName = this.scanner.nextLine();
+		
+		boolean readFromFile = TodoFileReader.importFile(fileName);
+		
+		if (readFromFile) {
+			System.out.println("Lists and items imported!");
+		} else {
+			System.out.println("ERROR: Unable to import from the file!");
+		}
+		
 	}
 }
