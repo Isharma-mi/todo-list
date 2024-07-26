@@ -27,12 +27,13 @@ public class UIController {
 					+ "\n6: Delete item from a list"
 					+ "\n7: Import from file"
 					+ "\n8: Export to file"
-					+ "\n9: Exit program");
+					+ "\n9: Add contents to SQL db"
+					+ "\n10: Exit program");
 			
 			// Gets user input
 			String input = this.scanner.nextLine();
 
-			if (!input.matches("[123456789]")) {
+			if (!input.matches("[123456789]") && !input.equals("10")) {
 				// If user input is incorrect  -> Restart process of asking what user wants to do
 				System.out.println("ERROR: Please give a correct input!");
 				continue;
@@ -69,6 +70,8 @@ public class UIController {
 				System.out.println();
 				oc.exportToFile();
 			} else if(input.equals("9")) {
+				// Export info to SQL
+			} else if(input.equals("10")) {
 				// Terminates program
 				break;
 			}
