@@ -1,5 +1,6 @@
 package com.example.TodoList.database;
 
+import com.example.TodoList.logic.Item;
 import com.example.TodoList.logic.ListOfLists;
 import com.example.TodoList.logic.ListOfItems;
 import java.sql.Connection;
@@ -22,8 +23,11 @@ public class ListDAO {
 		String url = "jdbc:sqlserver://" + serverName + ";encrypt=true;trustServerCertificate=true";
 		try (Connection connection = DriverManager.getConnection(url, userName, password)) {
 			System.out.println("Connection made");
+			// Tries to create db -> Create tables -> Create records
 			createDatabase(connection, dbName);;
-			createTables(connection, dbName);
+			if (createTables(connection, dbName)) {
+				insertIntoTables(connection, dbName);
+			}
 		} catch(SQLException e) {
 			System.out.println("ERROR: Unable to export to SQL, SPECIFIC ERROR: " + e.getMessage());
 		}
@@ -47,14 +51,18 @@ public class ListDAO {
 	/**
 	 * Creates each individual list as a table in SQL.
 	 * @param connection Object that will access the SQL server.
-	 * @param dbName Name of the db that has been created.
-	 * @throws SQLException If unable to craete tables within the database
+	 * @param dbName Name of the database that has been created.
+	 * @throws SQLException If unable to create tables within the database
 	 */
-	private static void createTables(Connection connection, String dbName) throws SQLException {
+	private static boolean createTables(Connection connection, String dbName) throws SQLException {
+		boolean createdTables = false;
 		System.out.println("Trying to add tables");
-		// TODO: Use a String to write out sql cmd then send that cmd over via prepareStatement(...)}
+		
+		if (ListOfLists.getInstance().getLists().isEmpty()) {
+			System.out.println("ERROR: No lists were found!");
+			return createdTables;
+		}
 		for (ListOfItems list: ListOfLists.getInstance().getLists()) {
-			System.out.println("In a list");
 			String sqlCmd = String.format(
 					"USE %s " +
 					"CREATE TABLE %s (" +
@@ -64,7 +72,7 @@ public class ListDAO {
 					")"
 					,dbName, list.getName());
 			
-			System.out.println(sqlCmd);
+			//System.out.println(sqlCmd);
 			
 			try (PreparedStatement stmnt = connection.prepareStatement(sqlCmd)) {
 				stmnt.execute();
@@ -73,20 +81,51 @@ public class ListDAO {
 				throw new SQLException("Unable to create tables");
 			}
 		}
-		System.out.println("Stopped trying to add tables.");
+		
+		System.out.println("Finished adding tables!");
+		return (createdTables = true);
 	}
 	
-	// TODO: Create method to add items to db (NOT FULLY IMPLEMENTED)
-	private static boolean insertIntoTable() {
-		boolean addedToDatabase = false;;
-		// Loop thru items of each list
+	/**
+	 * Creates each item as a record in the respective table in SQL. 
+	 * @param connection Object that will access the SQL server
+	 * @param dbName Name of the database that has been created
+	 * @return returns boolean letting caller know if records were successfuly made
+	 * @throws SQLException If unable to create records in the db
+	 */
+	private static boolean insertIntoTables(Connection connection, String dbName) throws SQLException {
+		boolean addedRecords = false;
 		List<ListOfItems> lists = ListOfLists.getInstance().getLists();
 		
 		// If there are no lists stop trying to add to db
 		if (lists.isEmpty()) {
-			return addedToDatabase = false;
+			return addedRecords;
 		}
 		
-		return addedToDatabase;
+		// Add the items to SQL one list at a time
+		for (ListOfItems list: lists) {
+			System.out.println("Trying to add records to table " + list.getName());
+			// Loop thru each item in a list
+			for (Item item: list.getItems()) {
+				String sqlCmd = String.format(
+						"USE %s " + 
+						"INSERT INTO %s (item_name, item_description) " +
+						"VALUES ((?), (?)) "
+						, dbName, list.getName());
+				
+				// Tries to send over the sql cmd to add the specific item to the list
+				try (PreparedStatement stmnt = connection.prepareStatement(sqlCmd)) {
+					// setString helps avoid any issues that could occur with specific escape characters
+					stmnt.setString(1, item.getName());
+					stmnt.setString(2, item.getDescription());
+					stmnt.executeUpdate();
+				} catch (SQLException e) {
+					throw new SQLException("Unable to create records in tables");
+				}
+			}
+		}
+		
+		System.out.println("Finished adding records to tables!");
+		return (addedRecords = true);
 	}
 }

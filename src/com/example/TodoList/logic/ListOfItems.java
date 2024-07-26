@@ -29,8 +29,20 @@ public class ListOfItems {
 	}
 
 
+	/**
+	 * Getter accessing the name of the list.
+	 * @return returns the name of the list
+	 */
 	public String getName() {
 		return this.name;
+	}
+	
+	/**
+	 * Getter accessing the items in the list.
+	 * @return returns thh items in the list
+	 */
+	public List<Item> getItems() {
+		return this.items;
 	}
 	
 	/**
