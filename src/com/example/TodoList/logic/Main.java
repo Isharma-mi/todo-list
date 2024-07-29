@@ -8,6 +8,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		// TODO: Update documentation across all files to be more like ListDAO comments 
+		// TODO: Update method names to be reflective of what they do better (ex: For booleans -> Use prefix like is)
+		// TODO: Delete old db and let user know thats what happens when exporting to sql
 		
 		// Delete the lines below (only keep for testing right now)
 		// Imports list information (so we do NOT need to create lists and items each time to test)

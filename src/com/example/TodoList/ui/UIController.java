@@ -17,7 +17,6 @@ public class UIController {
 	public void start() {
 		while (true) {
 			// Asks user what they want to do
-			// TODO: Implement all options
 			System.out.println("---------------Welcome to the TodoList! What would you like to do?------------------"
 					+ "\n1: View name of all lists"
 					+ "\n2: Create a list"
@@ -71,6 +70,7 @@ public class UIController {
 				oc.exportToFile();
 			} else if(input.equals("9")) {
 				// Export info to SQL
+				oc.exportToSQL();
 			} else if(input.equals("10")) {
 				// Terminates program
 				break;

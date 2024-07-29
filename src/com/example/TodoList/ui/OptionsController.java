@@ -6,6 +6,7 @@ import com.example.TodoList.file.TodoFileReader;
 import com.example.TodoList.file.TodoFileWriter;
 import com.example.TodoList.logic.ListOfItems;
 import com.example.TodoList.logic.ListOfLists;
+import com.example.TodoList.database.ListDAO;
 
 public class OptionsController {
 	private Scanner scanner;
@@ -23,7 +24,7 @@ public class OptionsController {
 	}
 	
 	/**
-	 * Makes a new list based off user input.
+	 * Creates a new list based off user input.
 	 */
 	void createList() {
 		System.out.println("What do you want the name of the list to be?");
@@ -63,7 +64,7 @@ public class OptionsController {
 	}
 	
 	/** 
-	 * Creates an item for a specific list
+	 * Creates an item for a specific list.
 	 */
 	void addItem() {
 		System.out.println("For what list do you want to add the item to?");
@@ -104,7 +105,7 @@ public class OptionsController {
 	}
 	
 	/**
-	 * Deletes an item from a specific list
+	 * Deletes an item from a specific list.
 	 */
 	void deleteItem() {
 		System.out.println("For what list do you want to delete the item from?");
@@ -178,7 +179,23 @@ public class OptionsController {
 			System.out.println("Lists and items imported!");
 		} else {
 			System.out.println("ERROR: Unable to import from the file!");
-		}
+		}	
+	}
+	
+	/**
+	 * Exports lists and items to a SQL database and table(s).
+	 */
+	void exportToSQL() {
+		System.out.println("What is the name of the server you would like to connect to?");
+		String serverName = this.scanner.nextLine();
+		System.out.println("What do you want the database to be called that will store the information? NOTE: It needs to be a new db.");
+		String dbName = this.scanner.nextLine();
+		System.out.println("What is the username of the SQL user? NOTE: This needs to be a user able to create a db and table");
+		String userName = this.scanner.nextLine();
+		System.out.println("What is the password of the SQL user?");
+		String password = this.scanner.nextLine();
+		
+		ListDAO.exportToSQL(serverName, dbName, userName, password);
 		
 	}
 }

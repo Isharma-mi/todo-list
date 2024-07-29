@@ -21,10 +21,18 @@ public class Item {
 		return itemDetails.toString();
 	}
 	
+	/**
+	 * Gets the name of the item
+	 * @return name of the item
+	 */
 	public String getName() {
 		return this.name;
 	}
 	
+	/**
+	 * Gets the description of the item
+	 * @return returns description of the item
+	 */
 	public String getDescription() {
 		return this.description;
 	}
