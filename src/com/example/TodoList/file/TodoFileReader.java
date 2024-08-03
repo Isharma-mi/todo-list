@@ -8,6 +8,11 @@ import com.example.TodoList.logic.ListOfLists;
 
 public class TodoFileReader {
 	
+	/**
+	 * Imports lists and items from a previously exported file.
+	 * @param fileName Name of the file that will be imported
+	 * @return returns boolean letting caller know if file was imported
+	 */
 	public static boolean importFile(String fileName) {
 		boolean fileRead = false;
 		try (BufferedReader reader = new BufferedReader(new FileReader(fileName + ".txt"))) {

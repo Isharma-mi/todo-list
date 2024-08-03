@@ -17,22 +17,22 @@ public class UIController {
 	public void start() {
 		while (true) {
 			// Asks user what they want to do
-			// TODO: Implement all options
 			System.out.println("---------------Welcome to the TodoList! What would you like to do?------------------"
 					+ "\n1: View name of all lists"
 					+ "\n2: Create a list"
 					+ "\n3: Delete a list"
 					+ "\n4: View all items from a list"
 					+ "\n5: Add item to a list"
-					+ "\n6: Delete item from a list"
+					+ "\n6: Complete/Delete item from a list"
 					+ "\n7: Import from file"
 					+ "\n8: Export to file"
-					+ "\n9: Exit program");
+					+ "\n9: Add contents to SQL db"
+					+ "\n10: Exit program");
 			
 			// Gets user input
 			String input = this.scanner.nextLine();
 
-			if (!input.matches("[123456789]")) {
+			if (!input.matches("[123456789]") && !input.equals("10")) {
 				// If user input is incorrect  -> Restart process of asking what user wants to do
 				System.out.println("ERROR: Please give a correct input!");
 				continue;
@@ -69,6 +69,9 @@ public class UIController {
 				System.out.println();
 				oc.exportToFile();
 			} else if(input.equals("9")) {
+				// Export info to SQL
+				oc.exportToSQL();
+			} else if(input.equals("10")) {
 				// Terminates program
 				break;
 			}

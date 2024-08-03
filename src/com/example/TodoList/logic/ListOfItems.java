@@ -29,8 +29,20 @@ public class ListOfItems {
 	}
 
 
+	/**
+	 * Gets name of the list.
+	 * @return returns the name of the list
+	 */
 	public String getName() {
 		return this.name;
+	}
+	
+	/**
+	 * Gets items in the list.
+	 * @return returns the items in the list
+	 */
+	public List<Item> getItems() {
+		return this.items;
 	}
 	
 	/**
@@ -42,7 +54,7 @@ public class ListOfItems {
 	}
 	
 	/**
-	 * Gets a ref to a specific item
+	 * Gets a reference to a specific item
 	 * @param itemName used to find item
 	 * @return returns the item (NOTE: Can return null)
 	 */
@@ -59,8 +71,8 @@ public class ListOfItems {
 	
 	/**
 	 * Adds an item to the list
-	 * @param name used to set the name of the item
-	 * @param description used to give additional info about the item
+	 * @param name Name of the item
+	 * @param description Gives additional info about the item
 	 * @return returns boolean letting caller know if item was added or not
 	 */
 	public boolean addItem(String name, String description) {
@@ -76,7 +88,7 @@ public class ListOfItems {
 	
 	/**
 	 * Deletes an item from the list
-	 * @param itemName used to find the item
+	 * @param itemName Name of the item
 	 * @return returns boolean letting caller know if item was deleted or not
 	 */
 	public boolean deleteItem(String itemName) {

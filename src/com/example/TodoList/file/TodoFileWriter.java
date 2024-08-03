@@ -10,7 +10,7 @@ public class TodoFileWriter {
 	
 	/**
 	 * Creates a file with a custom name containing all the lists and their items.
-	 * @param fileName sets the file name
+	 * @param fileName Name of file that will be made
 	 * @return returns boolean letting caller know if file was created and written on successfully
 	 */
 	public static boolean writeToFile(String fileName) {

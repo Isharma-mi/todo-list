@@ -30,7 +30,7 @@ public class ListOfLists {
 	/**
 	 * Used for testing purposes.
 	 * Removes references to all lists of items currently being stored and the items being stored in each list.
-	 * Overall, Resets singelton instance so that tests can run smoothly without any accidental dependencies to each other.
+	 * Overall, resets singelton instance so that tests can run smoothly without any accidental dependencies to each other.
 	 */
 	public void reset() {
 
@@ -62,7 +62,7 @@ public class ListOfLists {
 	
 	/**
 	 * Gets a ref to the object containing all the lists. 
-	 * @return returns the List obj containing all the lists of items
+	 * @return returns the List object containing all the lists of items
 	 */
 	public List<ListOfItems> getLists() {
 		return this.lists;
@@ -70,7 +70,7 @@ public class ListOfLists {
 	
 	/**
 	 * Gets a ref to a specific list
-	 * @param listName used to find the list
+	 * @param listName Name of the list to search for
 	 * @return returns the list (NOTE: Can return null)
 	 */
 	public ListOfItems getList(String listName) {
@@ -106,7 +106,7 @@ public class ListOfLists {
 	
 	/**
 	 * Deletes an individual list.
-	 * @param listName String used to find the list user wants to delete.
+	 * @param listName Name used to find the list user wants to delete.
 	 * @return returns boolean letting caller know if list was deleted.
 	 */
 	public boolean deleteList(String listName) {
