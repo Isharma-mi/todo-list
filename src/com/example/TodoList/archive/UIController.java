@@ -1,4 +1,4 @@
-package com.example.TodoList.ui;
+package com.example.TodoList.archive;
 
 import java.util.Scanner;
 
