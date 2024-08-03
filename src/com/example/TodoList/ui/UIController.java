@@ -23,7 +23,7 @@ public class UIController {
 					+ "\n3: Delete a list"
 					+ "\n4: View all items from a list"
 					+ "\n5: Add item to a list"
-					+ "\n6: Delete item from a list"
+					+ "\n6: Complete/Delete item from a list"
 					+ "\n7: Import from file"
 					+ "\n8: Export to file"
 					+ "\n9: Add contents to SQL db"
