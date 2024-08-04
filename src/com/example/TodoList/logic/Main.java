@@ -5,6 +5,9 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
+// For testing purposes
+import com.example.TodoList.file.TodoFileReader;
+
 public class Main extends Application {
 	
 	@Override
@@ -22,6 +25,12 @@ public class Main extends Application {
 		// TODO: Add documentation related to each class
 		// TODO: Let user import from SQL
 		// TODO: Let user delete old db and replace it
+		// TODO: What happens if importing lists and there is a list with a duplicate name?
+		
+		// To make testing easier
+		TodoFileReader.importFile("TodoListTest");
 		launch(Main.class);
+
+
 	}
 }

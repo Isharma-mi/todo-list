@@ -1,10 +1,8 @@
 package com.example.TodoList.ui;
 
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.control.Label;
+
 /**
  * Manages all elements on the GUI.
  * Combines the ListGUI with the ItemsGUI.
