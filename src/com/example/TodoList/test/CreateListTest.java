@@ -42,4 +42,22 @@ class CreateListTest {
 		ref.addList("List");
 		assertFalse(ref.addList("List"));
 	}
+	
+	/**
+	 * Test case checking that list names beginning with "-" can NOT be added
+	 */
+	@Test
+	void addListBeginningWithDashShouldReturnFalse() {
+		ListOfLists ref = ListOfLists.getInstance();
+		assertFalse(ref.addList("-List"));
+	}
+	
+	/**
+	 * Test case checking that list names that are empty can NOT be added
+	 */
+	@Test
+	void addListWithNoNameShouldReturnFalse() {
+		ListOfLists ref = ListOfLists.getInstance();
+		assertFalse(ref.addList(""));
+	}
 }

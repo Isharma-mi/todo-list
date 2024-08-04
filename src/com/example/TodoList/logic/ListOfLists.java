@@ -95,7 +95,9 @@ public class ListOfLists {
 	 * @return returns boolean letting caller know if list was added
 	 */
 	public boolean addList(String listName) {
-		boolean canAdd = !this.lists.stream().anyMatch(l -> l.getName().equals(listName));
+		boolean canAdd = !listName.startsWith("-") 
+							&& !listName.isEmpty()
+							&& !this.lists.stream().anyMatch(l -> l.getName().equals(listName));
 		
 		if (canAdd) {
 			this.lists.add(new ListOfItems(listName));

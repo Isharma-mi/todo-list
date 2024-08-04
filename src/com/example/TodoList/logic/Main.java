@@ -28,7 +28,7 @@ public class Main extends Application {
 		// TODO: What happens if importing lists and there is a list with a duplicate name?
 		
 		// To make testing easier
-		TodoFileReader.importFile("TodoListTest");
+		//TodoFileReader.importFile("TodoListTest");
 		launch(Main.class);
 
 

@@ -35,14 +35,15 @@ public class ListsManager {
 		
 		return instance;
 	}
+	
 	/**
 	 * Gets the layout relating to showing and creating new lists.
 	 * @return Returns VBox containing all the list names and components relating to creation of a list.
 	 */
 	public Parent getView() {
 		// TODO: Add formatting to "Lists:" text (center it and add padding)
-		// TODO: Create + button to add lists use event handlers for this
 		// TODO: Remove borders of buttons for + and lists
+		// TODO: Update window to get bigger when lists added
 
 		// Populate lists when importing a file
 		// Populate new lists one at a time
@@ -50,29 +51,36 @@ public class ListsManager {
 		// Layout containing everything associated with the viewing of all the lists
 		VBox layout = new VBox();
 
-		// Components related to header where it says Lists: and has button to add a list
+		// Components related to viewing of the lists
 		HBox listsHeader = new HBox();
 		Label label = new Label("Lists:");
 		Button addListButton = new Button("+");
+		VBox lists = new VBox();
 		
+		// Adds header related components together
 		listsHeader.getChildren().addAll(label, addListButton);
 		
-		
+		// When the user clicks the button to add a list
 		addListButton.setOnAction(e -> {
-			// Box will have ok and cancel button
-				// When click ok -> Add a new button with the name of the list to the vbox
-			System.out.println("TESTING: Add a list button pressed");
-			addListStage();
-			
+			addListStage(lists);
 		});
 		
+		
 		// TESTING: Calling populateLists immediately for testing lists show up
-		layout.getChildren().addAll(listsHeader, populateLists());
+		//lists = populateLists();
+		
+		// Adds the header and names of the lists together
+		layout.getChildren().addAll(listsHeader, lists);
 		return layout;
 	}
 	
-	private void addListStage() {
+	/**
+	 * Creates a window that gets the name of a list that user wants to create.
+	 * @param lists VBox containing the names of all the lists that will get updated if a new list is successfully made
+	 */
+	private void addListStage(VBox lists) {
 		// TODO: Center label and submitButton
+		
 		// Creates UI components
 		Label label = new Label("What will the name of the list be?");
 		TextField textField = new TextField();
@@ -94,31 +102,40 @@ public class ListsManager {
 		
 		// Whenever the submit button is pressed
 		submitButton.setOnAction(e -> {
+			String listName = textField.getText();
+			
 			// Let user know if nothing was put in text field
-			if (textField.getText().trim().equals("")) {
+			if (listName.trim().equals("")) {
 				submitStatusLabel.setText("ERROR: Nothing put in text field!");
 				return;
 			}
-			
-			// Check that entered name does not exist in lists already
-			System.out.println("TESTING: Trying to submit a new list name");
+
+			// Tries to create a list was the given name in the singelton
+			boolean listWasAdded = ListOfLists.getInstance().addList(listName);
+
+			if (listWasAdded) {
+				// If list was created -> Add a button for it
+				lists.getChildren().add(new Button(listName));
+			} else if (listName.startsWith("-")) {
+				submitStatusLabel.setText("ERROR: List name can NOT begin with \"-\"!");
+				return;
+			} else {
+				submitStatusLabel.setText("ERROR: List with same name exists already!");
+				return;
+			}
+			// If list was created successfully -> Close the popup window
 			stage.close();
 		});
 	}
 	
 	/**
-	 * Adds all the lists to the lists
+	 * For testing purposes right now.
+	 * Adds all the lists to the lists (Maybe be reworked in future for adding imported lists properly).
 	 * @return
 	 */
-	private Parent populateLists() {
-		VBox listsLayout = new VBox();
-		
+	private void populateLists(VBox lists) {	
 		for (int i = 0; i < ListOfLists.getInstance().getLists().size(); i++) {
-			listsLayout.getChildren().add(new Button(ListOfLists.getInstance().getLists().get(i).getName()));
+			lists.getChildren().add(new Button(ListOfLists.getInstance().getLists().get(i).getName()));
 		}
-		
-		return listsLayout;
 	}
-
-	
 }
