@@ -28,7 +28,7 @@ public class ListsManager {
 	 * Creates a ListsManager object or returns ref to the existing singleton.
 	 * @return returns the singleton instance
 	 */
-	public static synchronized ListsManager getInstance() {
+	protected static synchronized ListsManager getInstance() {
 		if (instance == null) {
 			instance = new ListsManager();
 		} 
@@ -40,7 +40,7 @@ public class ListsManager {
 	 * Gets the layout relating to showing and creating new lists.
 	 * @return returns VBox containing all the list names and components relating to creation of a list.
 	 */
-	public Parent getView() {
+	protected Parent getView() {
 		// TODO: Add formatting to "Lists:" text (center it and add padding)
 		// TODO: Remove borders of buttons for + and lists
 		// TODO: Update window to get bigger when lists added
@@ -59,7 +59,7 @@ public class ListsManager {
 		
 		// When the user clicks the button to add a list
 		addListButton.setOnAction(e -> {
-			addListStage(lists);
+			ListCreationManager.addListStage(lists);
 		});
 		
 		// Adds the header and names of the lists together
@@ -69,67 +69,6 @@ public class ListsManager {
 		layout.getChildren().add(testingPopulateLists());
 		
 		return layout;
-	}
-	
-	/**
-	 * Creates a window that gets the name of a list that user wants to create.
-	 * @param lists VBox containing the names of all the lists that will get updated if a new list is successfully made
-	 */
-	private void addListStage(VBox lists) {
-		// TODO: Center label and submitButton
-		
-		// Creates UI components
-		Label label = new Label("What will the name of the list be?");
-		TextField textField = new TextField();
-		Button submitButton = new Button("Submit");
-		Label submitStatusLabel = new Label();
-		
-		// Organizes UI components
-		VBox layout = new VBox();
-		layout.getChildren().addAll(label, textField, submitButton, submitStatusLabel);
-	
-		// Adds components for viewing
-		Scene scene = new Scene(layout);
-		
-		// Creates window 
-		Stage stage = new Stage();
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.setScene(scene);
-		stage.show();
-		
-		// Whenever the submit button is pressed
-		submitButton.setOnAction(submitBtnClicked -> {
-			String listName = textField.getText();
-			
-			// Let user know if nothing was put in text field
-			if (listName.trim().equals("")) {
-				submitStatusLabel.setText("ERROR: Nothing put in text field!");
-				return;
-			}
-
-			// Tries to actually make the list
-			boolean listWasAdded = ListOfLists.getInstance().addList(listName);
-
-			if (listWasAdded) {
-				// If list was created -> Add a button for it and set events for when it is clicked
-				Button newListBtn = new Button(listName);
-				
-				newListBtn.setOnAction(newListBtnClicked -> {
-					ItemsManager.getInstance().modifyItems(newListBtn.getText());
-				});
-				
-				// Adds the button to the view
-				lists.getChildren().add(newListBtn);
-			} else if (listName.startsWith("-")) {
-				submitStatusLabel.setText("ERROR: List name can NOT begin with \"-\"!");
-				return;
-			} else {
-				submitStatusLabel.setText("ERROR: List with same name exists already!");
-				return;
-			}
-			// If list was created successfully -> Close the popup window
-			stage.close();
-		});
 	}
 	
 	/**
@@ -149,6 +88,7 @@ public class ListsManager {
 			
 			newListBtn.setOnAction(newListBtnClicked -> {
 				System.out.println(newListBtn.getText());
+				ItemsManager.getInstance().setCurrentList(newListBtn.getText());
 				ItemsManager.getInstance().modifyItems(newListBtn.getText());
 			});
 		}

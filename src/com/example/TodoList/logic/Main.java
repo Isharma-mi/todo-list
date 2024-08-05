@@ -27,6 +27,7 @@ public class Main extends Application {
 		// TODO: Let user import from SQL
 		// TODO: Let user delete old db and replace it
 		// TODO: What happens if importing lists and there is a list with a duplicate name?
+		// TODO: Add ability to scroll
 		
 		// To make testing easier
 		TodoFileReader.importFile("TodoListTest");
