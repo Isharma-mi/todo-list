@@ -11,9 +11,11 @@ import javafx.scene.layout.BorderPane;
 public class TodoListGUI {
 	public Parent getView() {
 		Parent listsManager = ListsManager.getInstance().getView();
+		Parent itemsManager = ItemsManager.getInstance().getView();
 		
 		BorderPane layout = new BorderPane();
 		layout.setLeft(listsManager);
+		layout.setRight(itemsManager);
 		
 		return layout;
 	}

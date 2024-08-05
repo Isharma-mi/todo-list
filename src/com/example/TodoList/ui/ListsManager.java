@@ -25,7 +25,7 @@ public class ListsManager {
 	}
 	
 	/**
-	 * Creates a ListsManaager object or returns ref to an existing one.
+	 * Creates a ListsManager object or returns ref to the existing singleton.
 	 * @return returns the singleton instance
 	 */
 	public static synchronized ListsManager getInstance() {
@@ -65,12 +65,12 @@ public class ListsManager {
 			addListStage(lists);
 		});
 		
-		
 		// TESTING: Calling populateLists immediately for testing lists show up
 		//lists = populateLists();
 		
 		// Adds the header and names of the lists together
 		layout.getChildren().addAll(listsHeader, lists);
+		
 		return layout;
 	}
 	
@@ -101,7 +101,7 @@ public class ListsManager {
 		stage.show();
 		
 		// Whenever the submit button is pressed
-		submitButton.setOnAction(e -> {
+		submitButton.setOnAction(submitBtnClicked -> {
 			String listName = textField.getText();
 			
 			// Let user know if nothing was put in text field
@@ -114,8 +114,13 @@ public class ListsManager {
 			boolean listWasAdded = ListOfLists.getInstance().addList(listName);
 
 			if (listWasAdded) {
-				// If list was created -> Add a button for it
-				lists.getChildren().add(new Button(listName));
+				// If list was created -> Add a button for it and set events for when it is clicked
+				Button newListBtn = new Button(listName);
+				newListBtn.setOnAction(newListBtnClicked -> {
+					System.out.println(newListBtn.getText());
+				});
+				
+				lists.getChildren().add(newListBtn);
 			} else if (listName.startsWith("-")) {
 				submitStatusLabel.setText("ERROR: List name can NOT begin with \"-\"!");
 				return;
