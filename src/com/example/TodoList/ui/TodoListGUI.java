@@ -9,14 +9,22 @@ import javafx.scene.layout.BorderPane;
  * Used by the Main class to set the overall scene.
  */
 public class TodoListGUI {
-	public Parent getView() {
+
+	/**
+	 * Gets the lists and items view separately. 
+	 * @return returns node containing all the UI elements
+	 */
+	public Parent getView() {		
+		// Gets the lists and items view
 		Parent listsManager = ListsManager.getInstance().getView();
 		Parent itemsManager = ItemsManager.getInstance().getView();
 		
+		// Organizes the layout of the GUI
 		BorderPane layout = new BorderPane();
 		layout.setLeft(listsManager);
-		layout.setRight(itemsManager);
+		layout.setCenter(itemsManager);
 		
+		// Returns the organized layout
 		return layout;
 	}
 }
